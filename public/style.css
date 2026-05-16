@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(240, 242, 243);
+}
+
+#main-nav {
+    background-color: rgb(128, 198, 255);
+    border-bottom: 3px solid white;
+}
+
+.nav-container {
+    height: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#main-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+#main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+#main-nav a:hover {
+    color: rgb(40, 145, 231);
+}
+
+.header-section {
+    background-color: rgb(40, 145, 231);
+    overflow: hidden;
+}
+
+.header-container {
+    max-width: 1300px;
+    height: 450px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+.header-image {
+    width: 400px;
+    opacity: 0.70;
+}
+
+#home-title {
+    color: white;
+    font-size: 90px;
+    text-align: left;
+    margin: 0;
+    white-space: nowrap;
+}
+.main-content {
+    width: 80%;
+    min-width: 850px;
+    max-width: 1000px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.intro-box {
+    background-color: white;
+    border-radius: 20px;
+    padding: 45px 60px;
+    margin-bottom: 50px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.intro {
+    line-height: 1.9;
+    margin-bottom: 30px;
+}
+
+.intro-box p {
+    font-size: 19px;
+    line-height: 1.9;
+}
+
+.main-content h1 {
+    font-size: 40px;
+    color: rgb(40, 145, 231);
+    margin-bottom: 25px;
+}
+
+.page-links {
+    min-width: 850px;
+}
+
+.feature-box {
+    background-color: white;
+    border-radius: 18px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 750px;
+    min-width: 700px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.feature-box h3 {
+    font-size: 28px;
+    color: rgb(40, 145, 231);
+    margin-bottom: 10px;
+}
+
+.feature-box p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: rgb(60, 60, 60);
+}
+
+.feature-box a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background-color: rgb(128, 198, 255);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.feature-box a:hover {
+    background-color: rgb(40, 145, 231);
+}
+
+.footer {
+    margin-top: 35px;
+    font-size: 16px;
+    color: #555;
+}
+
+#chart-section {
+    display: none;
+}
+
+#country-results {
+    display: none;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.stat-card {
+    background-color: rgb(240, 242, 243);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.stat-card h4 {
+    color: rgb(40, 145, 231);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 35px 50px;
+    margin-bottom: 35px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.info-card h2 {
+    font-size: 30px;
+    color: rgb(40, 145, 231);
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    font-size: 24px;
+    color: rgb(40, 145, 231);
+    margin-bottom: 10px;
+}
+
+.info-card p {
+    font-size: 19px;
+    line-height: 1.8;
+    color: rgb(60, 60, 60);
+}

@@ -1,66 +1,48 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const supabaseClient = require('@supabase/supabase-js');
-const { isValidStateAbbreviation } = require('usa-state-validator');
 const dotenv = require('dotenv');
 
 const app = express();
 const port = 3000;
-dotenv.config()
-app.use(bodyParser.json());
+
+dotenv.config();
+app.use(express.json());
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
 
-app.get('/customers', async (req, res) => {
-  console.log('Attempting to get all customers!');
+app.get('/saved_searches', async (req, res) => {
+  const { data, error } = await supabase
+    .from('saved_searches')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-  const { data, error } = await supabase.from('customer').select();
-
-  if (error) {
-    console.log(`Error: ${error}`);
-    res.statusCode = 500;
-    res.send(error);
-  } else {
-    console.log('Recieved Data:', data);
-    res.json(data);
-  }
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
 });
 
-app.post('/customer', async (req, res) => {
-  console.log('Adding Customer');
-  console.log(`Request: ${JSON.stringify(req.body)}`);
+app.post('/saved_searches', async (req, res) => {
+  const { country, second_country, indicator, search_type } = req.body;
 
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const state = req.body.state;
-
-  if (!isValidStateAbbreviation(state)) {
-    console.log(`State: ${state} is invalid`);
-    res.statusCode = 400;
-    res.json({
-      message: `${state} is not a valid 2 Letter Abbreviation for State`,
-    });
-    return;
+  if (!country || !indicator || !search_type) {
+    return res
+      .status(400)
+      .json({ message: 'country, indicator, and search_type are required' });
   }
 
   const { data, error } = await supabase
-    .from('customer')
+    .from('saved_searches')
     .insert({
-      customer_first_name: firstName,
-      customer_last_name: lastName,
-      customer_state: state,
+      country,
+      second_country: second_country ?? null,
+      indicator,
+      search_type,
     })
     .select();
 
-  if (error) {
-    console.log(`Error: ${error}`);
-    res.statusCode = 500;
-    res.send(error);
-  } else {
-    res.json(data);
-  }
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
 });
 
 app.listen(port, () => {
