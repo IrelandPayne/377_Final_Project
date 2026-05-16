@@ -32,8 +32,6 @@ if (countryBtn) {
   countryBtn.addEventListener('click', viewCountry);
 }
 
-window.onload = loadSavedSearches;
-
 async function compareCountries() {
   const countryOne = document.getElementById('country-one').value;
   const countryTwo = document.getElementById('country-two').value;
@@ -230,79 +228,20 @@ function formatNumber(number) {
 }
 
 async function createSavedSearch(country, secondCountry, indicator, searchType) {
-  await fetch('/api/saved-searches', {
-    method: 'POST',
-    body: JSON.stringify({
-      country: country,
-      second_country: secondCountry,
-      indicator: indicator,
-      search_type: searchType,
-    }),
-    headers: {
-      'content-type': 'application/json',
-    },
-  }).then((result) => result.json());
-
-  await loadSavedSearches();
-}
-
-async function loadSavedSearches() {
-  await fetch('/api/saved-searches')
-    .then((result) => result.json())
-    .then((resultJson) => {
-      const preExistingTable = document.getElementById('savedSearchInfo');
-      if (preExistingTable) {
-        preExistingTable.remove();
-      }
-
-      const table = document.createElement('table');
-      table.setAttribute('id', 'savedSearchInfo');
-      table.style.margin = '30px auto';
-      table.style.backgroundColor = 'white';
-      table.style.borderRadius = '14px';
-      table.style.padding = '20px';
-      table.style.boxShadow = '0px 4px 14px rgba(0, 0, 0, 0.08)';
-
-      const tableRow = document.createElement('tr');
-      const headingCountry = document.createElement('th');
-      headingCountry.innerHTML = 'Country';
-      const headingSecondCountry = document.createElement('th');
-      headingSecondCountry.innerHTML = 'Second Country';
-      const headingIndicator = document.createElement('th');
-      headingIndicator.innerHTML = 'Indicator';
-      const headingType = document.createElement('th');
-      headingType.innerHTML = 'Search Type';
-
-      tableRow.appendChild(headingCountry);
-      tableRow.appendChild(headingSecondCountry);
-      tableRow.appendChild(headingIndicator);
-      tableRow.appendChild(headingType);
-      table.appendChild(tableRow);
-
-      resultJson.forEach((search) => {
-        const searchRow = document.createElement('tr');
-        const countryCell = document.createElement('td');
-        const secondCountryCell = document.createElement('td');
-        const indicatorCell = document.createElement('td');
-        const typeCell = document.createElement('td');
-
-        countryCell.innerHTML = countryNames[search.country] || search.country;
-        secondCountryCell.innerHTML =
-          search.second_country ? countryNames[search.second_country] || search.second_country : '--';
-        indicatorCell.innerHTML = indicatorNames[search.indicator] || search.indicator;
-        typeCell.innerHTML = search.search_type;
-
-        searchRow.appendChild(countryCell);
-        searchRow.appendChild(secondCountryCell);
-        searchRow.appendChild(indicatorCell);
-        searchRow.appendChild(typeCell);
-        table.appendChild(searchRow);
+    try {
+      await fetch('/api/saved-searches', {
+        method: 'POST',
+        body: JSON.stringify({
+          country: country,
+          second_country: secondCountry,
+          indicator: indicator,
+          search_type: searchType,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        },
       });
-
-      const compareMain = document.querySelector('body .main-content');
-      if (compareMain) {
-        compareMain.appendChild(table);
-      }
-    })
-    .catch(() => {});
-}
+    } catch (error) {
+      console.log('Failed to save search:', error);
+    }
+  }
