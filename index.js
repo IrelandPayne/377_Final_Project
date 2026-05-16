@@ -1,48 +1,116 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const supabaseClient = require('@supabase/supabase-js');
 const dotenv = require('dotenv');
 
 const app = express();
 const port = 3000;
-
 dotenv.config();
-app.use(express.json());
+
+app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = supabaseClient.createClient(supabaseUrl, supabaseKey);
 
-app.get('/saved_searches', async (req, res) => {
-  const { data, error } = await supabase
-    .from('saved_searches')
-    .select('*')
-    .order('created_at', { ascending: false });
+const indicators = {
+  gdp: 'NY.GDP.MKTP.CD',
+  inflation: 'FP.CPI.TOTL.ZG',
+  unemployment: 'SL.UEM.TOTL.ZS',
+  life_expectancy: 'SP.DYN.LE00.IN',
+};
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+app.get('/', (req, res) => {
+  res.sendFile('public/index.html', { root: __dirname });
 });
 
-app.post('/saved_searches', async (req, res) => {
-  const { country, second_country, indicator, search_type } = req.body;
+app.get('/api/worldbank', async (req, res) => {
+  console.log('Attempting to get World Bank data!');
 
-  if (!country || !indicator || !search_type) {
-    return res
-      .status(400)
-      .json({ message: 'country, indicator, and search_type are required' });
+  const countries = req.query.countries;
+  const indicator = req.query.indicator;
+  const indicatorCode = indicators[indicator];
+
+  if (!countries || !indicatorCode) {
+    res.statusCode = 400;
+    res.json({
+      message: 'Missing country or invalid indicator',
+    });
+    return;
+  }
+
+  const url =
+    `https://api.worldbank.org/v2/country/${countries}/indicator/${indicatorCode}` +
+    `?format=json&per_page=1000`;
+
+  const response = await fetch(url);
+  const apiData = await response.json();
+
+  const cleanedData = apiData[1]
+    .filter((item) => item.value !== null)
+    .map((item) => ({
+      country: item.country.value,
+      year: item.date,
+      value: item.value,
+    }))
+    .sort((a, b) => Number(a.year) - Number(b.year));
+
+  res.json(cleanedData);
+});
+
+app.get('/api/saved-searches', async (req, res) => {
+  console.log('Attempting to get saved searches!');
+
+  const { data, error } = await supabase
+    .from('saved_searches')
+    .select()
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.log(`Error: ${error}`);
+    res.statusCode = 500;
+    res.send(error);
+  } else {
+    console.log('Received Data:', data.length);
+    res.json(data);
+  }
+});
+
+app.post('/api/saved-searches', async (req, res) => {
+  console.log('Adding saved search');
+  console.log(`Request: ${JSON.stringify(req.body)}`);
+
+  const country = req.body.country;
+  const secondCountry = req.body.second_country;
+  const indicator = req.body.indicator;
+  const searchType = req.body.search_type;
+
+  if (!country || !indicator || !searchType) {
+    res.statusCode = 400;
+    res.json({
+      message: 'country, indicator, and search_type are required',
+    });
+    return;
   }
 
   const { data, error } = await supabase
     .from('saved_searches')
     .insert({
-      country,
-      second_country: second_country ?? null,
-      indicator,
-      search_type,
+      country: country,
+      second_country: secondCountry,
+      indicator: indicator,
+      search_type: searchType,
     })
     .select();
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  if (error) {
+    console.log(`Error: ${error}`);
+    res.statusCode = 500;
+    res.send(error);
+  } else {
+    res.json(data);
+  }
 });
 
 app.listen(port, () => {
