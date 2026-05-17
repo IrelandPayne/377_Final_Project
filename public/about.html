@@ -23,19 +23,16 @@
     <div class="main-content">
       <h1 data-aos="fade-up">About This Dashboard</h1>
 
-      <p data-aos="fade-up">
-        The Global Economic Trends Dashboard is a web application that helps
-        users explore economic data in a simple and visual way.
-      </p>
-
       <div class="info-card" data-aos="fade-up">
         <h2>Purpose</h2>
 
         <p>
-          Economic data can be difficult to understand when it is shown in large
-          tables or complex reports. This dashboard turns global economic data
-          into charts, statistics, and short summaries so users can understand
-          trends more easily.
+          The Global Economic Trends Dashboard is a web application that helps
+          users explore economic data in a simple and visual way. Economic data
+          can be difficult to understand when it is shown in large tables or
+          complex reports. This dashboard turns global economic data into
+          charts, statistics, and short summaries so users can understand trends
+          more easily.
         </p>
       </div>
 
@@ -44,8 +41,9 @@
 
         <p>
           This project uses data from the World Bank Indicators API. The data
-          includes economic indicators such as GDP, inflation, unemployment, and
-          life expectancy.
+          includes a handful of economic indicators: GDP, inflation,
+          unemployment, and life expectancy from ~1960 to 2024. The data also
+          includes several countries to compare metrics between.
         </p>
       </div>
 
@@ -55,7 +53,9 @@
         <p>
           This dashboard is designed for students, teachers, researchers, and
           anyone interested in comparing global economic trends across
-          countries.
+          countries. Instead of looking through spreadsheets, users will be able
+          to visually explore and compare economic data across the countries of
+          their choice.
         </p>
       </div>
 
@@ -63,10 +63,12 @@
         <h2>How It Was Built</h2>
 
         <p>
-          The front end was built with HTML, CSS, and JavaScript. The backend
-          uses Node.js and Express to request and clean data before sending it
-          to the dashboard. Supabase was also used to provide database
-          functionality and support backend storage.
+          The front end was built with HTML, CSS, and JavaScript, using Chart.js
+          for comparison visualizations and AOS for cool on-page animations. The
+          backend uses Node.js and Express to request and clean data from the
+          World Bank API before sending it to the dashboard. Supabase provides
+          database storage for saved searches with unique user IDs and their
+          specific searches.
         </p>
       </div>
     </div>

@@ -245,8 +245,9 @@ async function createSavedSearch(country, secondCountry, indicator, searchType) 
       console.log('Failed to save search:', error);
     }
   }
-  
+
   //added to address loading issues/cache issues I was having with AOS in vercel
+  //googled this because I really wasn't sure why it was working locally but not in vercel
   window.addEventListener('DOMContentLoaded', () => {
     if (window.AOS) {
       AOS.init({ duration: 700, once: true });

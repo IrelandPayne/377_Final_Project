@@ -1,56 +1,42 @@
 # Global Economic Trends Dashboard
 
 ## Project Description
-Global Economic Trends Dashboard is a web application that turns complex global economic data into interactive, readable comparisons. Users can compare countries or analyze a single country using indicators like GDP, inflation, unemployment rate, and life expectancy.
 
-## Target Browsers
-- Google Chrome (latest desktop)
-- Mozilla Firefox (latest desktop)
-- Microsoft Edge (latest desktop)
-- Safari (recent macOS)
+The Global Economic Trends Dashboard is a web application that allows users to explore and compare global economic and social indicator data using the World Bank API. The platform transforms complex economic information into charts, summaries, and country comparisons that are easier for everyday users to understand.
 
-## Developer Manual
-- [Developer Manual](./docs/developer-manual.md)
+Users can:
+- Search and explore economic indicators by country
+- Compare two countries side-by-side
+- View historical trends through charts and visualizations
+- Read simplified indicator definitions
+- Save searches using Supabase integration
+
+Current indicators include:
+- GDP
+- Inflation
+- Unemployment
+- Life Expectancy
+
+The dashboard is designed for students, educators, researchers, and general users interested in understanding global economic trends in a more visual and accessible way. :contentReference[oaicite:0]{index=0}
 
 ---
 
-## Developer Manual
+# Target Browsers
 
-### Install Dependencies
-```bash
-npm install
-```
+This application is designed for modern desktop and mobile browsers, including:
 
-### Environment Variables
-Create `.env` in root:
-```env
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_KEY=your_supabase_key
-```
+- Google Chrome (recommended)
+- Safari
+- Firefox
+- Microsoft Edge
 
-### Run Server
-```bash
-npm start
-```
-or
-```bash
-node index.js
-```
+This application is also compatible with:
+- iOS Safari
+- Android Chrome
+---
 
-### Run Tests
-No automated test suite is currently implemented.
+# Developer Manual
 
-### API Endpoints
-- `GET /api/worldbank`: Reads external World Bank data.
-- `GET /api/saved-searches`: Reads saved searches from Supabase.
-- `POST /api/saved-searches`: Writes saved searches to Supabase.
+Here's the link the the deverloper manual:
 
-### Known Bugs
-- No automated tests yet.
-- Saved-search features depend on valid Supabase credentials.
-
-### Roadmap
-- Add automated tests.
-- Add year-range filters.
-- Add indicator-specific pages.
-- Expand coverage to more countries/metrics.
+[Developer Manual](docs/developer-manual.md)
