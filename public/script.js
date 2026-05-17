@@ -245,12 +245,16 @@ async function createSavedSearch(country, secondCountry, indicator, searchType) 
       console.log('Failed to save search:', error);
     }
   }
-  if (window.AOS) {
-    AOS.init({
-      duration: 700,
-      once: true,
-    });
-  }
+  
+  //added to address loading issues/cache issues I was having with AOS in vercel
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.AOS) {
+      AOS.init({ duration: 700, once: true });
+    }
+  });
+  window.addEventListener('load', () => {
+    if (window.AOS) AOS.refreshHard();
+  });
   
   const definitionBtn = document.getElementById('load-definition-button');
   if (definitionBtn) {

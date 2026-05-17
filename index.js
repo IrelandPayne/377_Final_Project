@@ -26,71 +26,58 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/worldbank', async (req, res) => {
-  console.log('Attempting to get World Bank data!');
-
   const countries = req.query.countries;
-  const indicator = req.query.indicator;
-  const indicatorCode = indicators[indicator];
+  const indicatorCode = indicators[req.query.indicator];
 
   if (!countries || !indicatorCode) {
-    res.statusCode = 400;
-    res.json({
-      message: 'Missing country or invalid indicator',
-    });
+    res.status(400).json({ message: 'Invalid request' });
     return;
   }
 
-  const url =
-    `https://api.worldbank.org/v2/country/${countries}/indicator/${indicatorCode}` +
-    `?format=json&per_page=1000`;
+  try {
+    const url =
+      `https://api.worldbank.org/v2/country/${countries}/indicator/${indicatorCode}` +
+      `?format=json&per_page=1000`;
 
-  const response = await fetch(url);
-  const apiData = await response.json();
+    const response = await fetch(url);
+    const apiData = await response.json();
 
-  const cleanedData = apiData[1]
-    .filter((item) => item.value !== null)
-    .map((item) => ({
-      country: item.country.value,
-      year: item.date,
-      value: item.value,
-    }))
-    .sort((a, b) => Number(a.year) - Number(b.year));
+    const cleanedData = (apiData[1] || [])
+      .filter((item) => item.value !== null)
+      .map((item) => ({
+        country: item.country.value,
+        year: item.date,
+        value: item.value,
+      }))
+      .sort((a, b) => Number(a.year) - Number(b.year));
 
-  res.json(cleanedData);
+    res.json(cleanedData);
+  } catch (error) {
+    res.status(500).json({ message: 'World Bank request failed' });
+  }
 });
 
 app.get('/api/saved-searches', async (req, res) => {
-  console.log('Attempting to get saved searches!');
-
   const { data, error } = await supabase
     .from('saved_searches')
     .select()
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.log(`Error: ${error}`);
-    res.statusCode = 500;
-    res.send(error);
+    res.status(500).json({ message: 'DB read failed' });
   } else {
-    console.log('Received Data:', data.length);
-    res.json(data);
+    res.json(data || []);
   }
 });
 
 app.post('/api/saved-searches', async (req, res) => {
-  console.log('Adding saved search');
-  console.log(`Request: ${JSON.stringify(req.body)}`);
-
   const country = req.body.country;
   const secondCountry = req.body.second_country;
   const indicator = req.body.indicator;
   const searchType = req.body.search_type;
 
   if (!country || !indicator || !searchType) {
-    res.statusCode = 400;
-    res.json({
-      message: 'country, indicator, and search_type are required',
-    });
+    res.status(400).json({ message: 'Missing required fields' });
     return;
   }
 
@@ -105,17 +92,12 @@ app.post('/api/saved-searches', async (req, res) => {
     .select();
 
   if (error) {
-    console.log(`Error: ${error}`);
-    res.statusCode = 500;
-    res.send(error);
+    res.status(500).json({ message: 'DB write failed' });
   } else {
-    res.json(data);
+    res.json(data || []);
   }
 });
 
-app.listen(port, () => {
-  console.log(`App is available on port: ${port}`);
-});
 app.get('/api/definitions', async (req, res) => {
   const indicatorMap = {
     gdp: 'NY.GDP.MKTP.CD',
@@ -144,6 +126,10 @@ app.get('/api/definitions', async (req, res) => {
       source: item?.sourceNote || 'No definition available.',
     });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to load definition.' });
+    res.status(500).json({ message: 'Definition request failed' });
   }
+});
+
+app.listen(port, () => {
+  console.log(`App is available on port: ${port}`);
 });
