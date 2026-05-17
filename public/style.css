@@ -204,3 +204,8 @@ body {
     line-height: 1.8;
     color: rgb(60, 60, 60);
 }
+
+#saved-searches-list {
+    list-style: none;
+    padding: 0;
+}

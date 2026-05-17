@@ -178,6 +178,30 @@ async function loadDefinition() {
 
   output.textContent = data.source;
 }
-
-// Frontend DB-read!! **
-fetch('/api/saved-searches').then(() => {});
+//front-end added!
+async function loadSavedSearches() {
+    const list = document.getElementById('saved-searches-list');
+    if (!list) return;
+  
+    const response = await fetch('/api/saved-searches');
+    const searches = await response.json();
+  
+    list.innerHTML = '';
+  
+    if (searches.length === 0) {
+      list.innerHTML = '<li>No saved searches yet.</li>';
+      return;
+    }
+  
+    searches.slice(0, 5).forEach((search) => {
+      const item = document.createElement('li');
+  
+      item.innerHTML = search.second_country
+        ? `${search.country} vs. ${search.second_country} - ${indicatorNames[search.indicator]}`
+        : `${search.country} - ${indicatorNames[search.indicator]}`;
+  
+      list.appendChild(item);
+    });
+  }
+  
+  loadSavedSearches();
