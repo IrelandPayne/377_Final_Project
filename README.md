@@ -17,7 +17,7 @@ Current indicators include:
 - Unemployment
 - Life Expectancy
 
-The dashboard is designed for students, educators, researchers, and general users interested in understanding global economic trends in a more visual and accessible way. :contentReference[oaicite:0]{index=0}
+The dashboard is designed for students learning economics, teachers explaining global development, researchers who want quick country comparisons, and anyone interested in understanding how countries are performing economically. 
 
 ---
 
@@ -37,6 +37,6 @@ This application is also compatible with:
 
 # Developer Manual
 
-Here's the link the the deverloper manual:
+Here is the link to the Developer Manual:
 
 [Developer Manual](docs/developer-manual.md)
