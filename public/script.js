@@ -245,3 +245,31 @@ async function createSavedSearch(country, secondCountry, indicator, searchType) 
       console.log('Failed to save search:', error);
     }
   }
+  if (window.AOS) {
+    AOS.init({
+      duration: 700,
+      once: true,
+    });
+  }
+  
+  const definitionBtn = document.getElementById('load-definition-button');
+  if (definitionBtn) {
+    definitionBtn.addEventListener('click', loadDefinition);
+  }
+  
+  async function loadDefinition() {
+    const indicator = document.getElementById('definition-indicator').value;
+    const output = document.getElementById('dynamic-definition-text');
+  
+    const response = await fetch(`/api/definitions?indicator=${indicator}`);
+    const data = await response.json();
+  
+    if (!response.ok) {
+      output.textContent = data.message || 'Could not load definition.';
+      return;
+    }
+  
+    output.textContent = data.source;
+  }
+  
+fetch('/api/saved-searches').then(() => console.log('DB read endpoint called'));

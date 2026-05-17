@@ -2,6 +2,8 @@
   <head>
     <title>Country</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script defer src="script.js"></script>
   </head>
 
@@ -19,7 +21,7 @@
     </nav>
 
     <div class="main-content">
-      <div class="compare-top">
+      <div class="compare-top" data-aos="fade-up">
         <h1>Country Analysis</h1>
 
         <div class="compare-inputs">
@@ -47,43 +49,43 @@
         </div>
       </div>
 
-      <div class="feature-box" id="country-results">
+      <div class="feature-box" id="country-results" data-aos="fade-up">
         <h3 id="country-results-title">Country Results</h3>
 
         <div class="stats-grid">
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Earliest Value</h4>
             <p id="earliest-value">--</p>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Latest Value</h4>
             <p id="latest-value">--</p>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Percent Change</h4>
             <p id="percent-change">--</p>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Highest Year</h4>
             <p id="highest-value">--</p>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Lowest Year</h4>
             <p id="lowest-value">--</p>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-aos="zoom-in">
             <h4>Trend Direction</h4>
             <p id="trend-direction">--</p>
           </div>
         </div>
       </div>
 
-      <div class="feature-box" id="country-summary-box">
+      <div class="feature-box" id="country-summary-box" data-aos="fade-up">
         <h3>Country Summary</h3>
 
         <p id="country-summary-text">
@@ -92,7 +94,7 @@
         </p>
       </div>
 
-      <p class="footer">
+      <p class="footer" data-aos="fade-up">
         Country data is loaded through the backend using World Bank Indicators
         data.
       </p>

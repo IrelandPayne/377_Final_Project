@@ -2,11 +2,13 @@
   <head>
     <title>Compare</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script defer src="script.js"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"
     ></script>
-    <script defer src="script.js"></script>
   </head>
 
   <body>
@@ -23,7 +25,7 @@
     </nav>
 
     <div class="main-content">
-      <div class="compare-top">
+      <div class="compare-top" data-aos="fade-up">
         <h1>Compare Countries</h1>
 
         <div class="compare-inputs">
@@ -64,11 +66,11 @@
         </div>
       </div>
 
-      <div class="chart-container" id="chart-section">
+      <div class="chart-container" id="chart-section" data-aos="fade-up">
         <canvas id="compare-chart"></canvas>
       </div>
 
-      <div class="feature-box">
+      <div class="feature-box" data-aos="fade-up">
         <h3>Comparison Summary</h3>
         <p id="summary-text">
           Choose two countries and an indicator, then click Compare to view the
@@ -76,7 +78,7 @@
         </p>
       </div>
 
-      <p class="footer">
+      <p class="footer" data-aos="fade-up">
         All comparison data is loaded through the backend using World Bank
         Indicators data.
       </p>

@@ -116,3 +116,34 @@ app.post('/api/saved-searches', async (req, res) => {
 app.listen(port, () => {
   console.log(`App is available on port: ${port}`);
 });
+app.get('/api/definitions', async (req, res) => {
+  const indicatorMap = {
+    gdp: 'NY.GDP.MKTP.CD',
+    inflation: 'FP.CPI.TOTL.ZG',
+    unemployment: 'SL.UEM.TOTL.ZS',
+    life_expectancy: 'SP.DYN.LE00.IN',
+  };
+
+  const key = req.query.indicator;
+  const code = indicatorMap[key];
+
+  if (!code) {
+    res.status(400).json({ message: 'Invalid indicator' });
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://api.worldbank.org/v2/indicator/${code}?format=json`
+    );
+    const apiData = await response.json();
+    const item = apiData?.[1]?.[0];
+
+    res.json({
+      indicator: key,
+      source: item?.sourceNote || 'No definition available.',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to load definition.' });
+  }
+});
