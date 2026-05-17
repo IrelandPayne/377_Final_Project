@@ -2,7 +2,7 @@
 
 ## Project Setup
 
-### 1. Clone the Repository
+### 1. Clone Repository
 
 ```bash
 git clone <repository-url>
@@ -20,7 +20,7 @@ cd <project-folder>
 npm install
 ```
 
-### 4. Configure Environment Variables
+### 4. Configure Variables
 
 Create a `.env` file in the root directory:
 
@@ -49,8 +49,6 @@ http://localhost:3000
 
 # Running Tests
 
-There is currently no automated testing implemented.
-
 Testing is manual:
 
 - Open all application pages:
@@ -72,7 +70,7 @@ Testing is manual:
 
 Retrieves World Bank indicator data for one or two countries.
 
-### Query Parameters
+### Parameters
 
 | Parameter | Description | Example |
 |---|---|---|
@@ -99,7 +97,7 @@ Results are returned in newest-first order.
 
 Stores a new saved search in Supabase.
 
-### Expected JSON Body
+### JSON Body (Expected)
 
 ```json
 {
@@ -116,7 +114,7 @@ Stores a new saved search in Supabase.
 
 Retrieves indicator definition text from the World Bank API through the backend server.
 
-### Query Parameters
+### Parameters
 
 | Parameter | Description |
 |---|---|
@@ -130,7 +128,7 @@ GET /api/definitions?indicator=gdp
 
 ---
 
-# Known Bugs and Limitations
+# Bugs and Limitations
 
 - No automated testing has been implemented.
 - Saved-search API endpoints fail if Supabase environment variables are missing.
